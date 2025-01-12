@@ -11,12 +11,12 @@ const DateTimePicker = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
                 label="Event Date"
-                name = "eventDate" 
+                name = "eventdate" 
                 sx = {{flex: 1}}/>
 
             <TimePicker 
                 label="Event Time" 
-                name = "eventTime"
+                name = "eventtime"
                 sx = {{ flex : 1}}
                 />
         </LocalizationProvider>
