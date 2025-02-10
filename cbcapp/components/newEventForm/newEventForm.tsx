@@ -5,10 +5,13 @@ import { FormHelperText } from '@mui/material';
 import Paper from '@mui/material/Paper'
 import React, { useState } from 'react'
 import RepeatEventSelect from './repeatEventSelect';
+import { useRouter } from 'next/navigation';
+
 
 const NewEventForm = () => {
-
+   const router = useRouter();
    const [isRepeatEvent, setIsRepeatEvent] = useState<boolean>(false)
+   const [error, setError] = useState<string | null>(null);
    const [ageRange, setAgeRange] = useState<number[]>([0, 25])
 
    const handleRepeatEventChange = () => {
@@ -16,16 +19,31 @@ const NewEventForm = () => {
    }
 
 
-   const handleAgeRangeChange = (event : React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("age changing...")
-    const prev = ageRange
-    prev[0] = parseInt(event.target.value[0])
-    prev[1] = parseInt(event.target.value[1])
+
+    const handleAgeRangeChange = (event: Event, newValue: number | number[]) => {
+        console.log("age changing...", newValue);
     
-    setAgeRange(prev)
-   }
+        // Ensure newValue is an array before setting the state
+        if (Array.isArray(newValue)) {
+            setAgeRange([...newValue]); // Create a new array to trigger state update
+        }
+    };
+   
 
-
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        
+        const res = await fetch("/api/events/add", { method: "POST", body: formData });
+        const result = await res.json();
+    
+        if (result.success) {
+          router.push(`${result.redirectUrl}?status=success&message=${encodeURIComponent(result.message)}`);
+        } else {
+          setError(result.message);
+          router.push(`${result.redirectUrl}?status=error&message=${encodeURIComponent(result.message)}`);
+        }
+      };
    
 const marks = [
     {
@@ -48,7 +66,7 @@ const marks = [
         }>
             <Typography variant='h4' textAlign={'center'} sx = {{mb: 3}}>Add New Event</Typography>
 
-            <form method = "post" action= "https://organic-journey-7xwx5q74wqwfxv59-3000.app.github.dev/api/events/add">
+            <form onSubmit={handleSubmit}>
                 <FormGroup>
                     <FormControl sx = {{mb : 3}}>
                         <TextField type = "text" name = "eventName" label = "Event Name" required/>
@@ -95,7 +113,6 @@ const marks = [
 
                     <Slider
                         value={ageRange}
-                        name = "age"
                         onChange={handleAgeRangeChange}
                         valueLabelDisplay="auto"
                         disableSwap
@@ -103,6 +120,8 @@ const marks = [
                         max={25}
                         marks = {marks}
                     />
+
+                    <input type="hidden" name="age" value={ageRange.join(",")} />
 
                     <FormControl>
                         <Button  variant = "outlined" type = "submit">Add Event</Button>

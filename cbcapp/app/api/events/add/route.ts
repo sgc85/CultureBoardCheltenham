@@ -1,16 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
 export const POST = async (req: NextRequest) => {
-    const formData = await req.formData()
+  try {
+    const formData = await req.formData();
+    const formObject = Object.fromEntries(formData.entries());
 
-    console.log(formData)
+    const ageValue = formObject.age;
+    let ageArray: number[] = [];
+    if (typeof ageValue === "string") {
+      ageArray = ageValue.split(",").map(Number);
+    } else {
+      console.error("Unexpected type for age:", ageValue);
+    }
 
-    const eventName = formData.get("eventName")
+    const dataToSave = { ...formObject, age: ageArray };
+    console.log("Received form data:", dataToSave);
 
-    return NextResponse.json(
-        {
-            success: true, 
-            data: {eventName: eventName}
-        })
+    const docRef = await addDoc(collection(db, "events"), dataToSave);
 
-}
+    // Return a JSON response instead of doing a server-side redirect.
+    return NextResponse.json({
+      success: !!docRef,
+      redirectUrl: docRef ? "/dashboard" : "/addEvent",
+      message: docRef
+        ? "Event created successfully"
+        : "Event could not be created",
+    });
+  } catch (e) {
+    console.error("Error adding event:", e);
+    return NextResponse.json({
+      success: false,
+      redirectUrl: "/addEvent",
+      message: e instanceof Error ? e.message : "Unknown error occurred",
+    });
+  }
+};
