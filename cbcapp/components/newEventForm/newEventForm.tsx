@@ -19,13 +19,11 @@ const NewEventForm = () => {
    }
 
 
-
     const handleAgeRangeChange = (event: Event, newValue: number | number[]) => {
         console.log("age changing...", newValue);
     
-        // Ensure newValue is an array before setting the state
         if (Array.isArray(newValue)) {
-            setAgeRange([...newValue]); // Create a new array to trigger state update
+            setAgeRange([...newValue]);
         }
     };
    

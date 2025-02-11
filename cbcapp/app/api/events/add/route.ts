@@ -16,11 +16,10 @@ export const POST = async (req: NextRequest) => {
     }
 
     const dataToSave = { ...formObject, age: ageArray };
-    console.log("Received form data:", dataToSave);
+    // console.log("Received form data:", dataToSave);
 
     const docRef = await addDoc(collection(db, "events"), dataToSave);
 
-    // Return a JSON response instead of doing a server-side redirect.
     return NextResponse.json({
       success: !!docRef,
       redirectUrl: docRef ? "/dashboard" : "/addEvent",
