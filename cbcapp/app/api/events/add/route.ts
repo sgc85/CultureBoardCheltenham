@@ -7,32 +7,33 @@ export const POST = async (req: NextRequest) => {
     const formData = await req.formData();
     const formObject = Object.fromEntries(formData.entries());
 
-    const ageValue = formObject.age;
-    let ageArray: number[] = [];
-    if (typeof ageValue === "string") {
-      ageArray = ageValue.split(",").map(Number);
-    } else {
-      console.error("Unexpected type for age:", ageValue);
-    }
+    const minAge = parseInt(formObject.minAge as string, 10);
+    const maxAge = parseInt(formObject.maxAge as string, 10);
+    const cost = parseInt(formObject.cost as string, 10);
 
-    const dataToSave = { ...formObject, age: ageArray };
-    // console.log("Received form data:", dataToSave);
 
-    const docRef = await addDoc(collection(db, "events"), dataToSave);
+    // const ageValue = formObject.age;
+    // let ageArray: number[] = [];
+    // if (typeof ageValue === "string") {
+    //   ageArray = ageValue.split(",").map(Number);
+    // } else {
+    //   console.error("Unexpected type for age:", ageValue);
+    // }
 
+    const dataToSave = { ...formObject, minAge, maxAge, cost };
+    // // console.log("Received form data:", dataToSave);
+
+    //CHANGED
+    await addDoc(collection(db, "events"), dataToSave);
+
+    //CHANGED
     return NextResponse.json({
-      success: !!docRef,
-      redirectUrl: docRef ? "/dashboard" : "/addEvent",
-      message: docRef
-        ? "Event created successfully"
-        : "Event could not be created",
+      success: true,
     });
   } catch (e) {
     console.error("Error adding event:", e);
     return NextResponse.json({
       success: false,
-      redirectUrl: "/addEvent",
-      message: e instanceof Error ? e.message : "Unknown error occurred",
     });
   }
 };

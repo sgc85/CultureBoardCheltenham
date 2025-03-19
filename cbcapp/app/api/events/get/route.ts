@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, getDoc } from "firebase/firestore";
 
 export const GET = async (req: NextRequest) => {
+
+  console.log("fetching events using API...")
   try {
     const { searchParams } = new URL(req.url);
+    console.log(searchParams)
     const eventId = searchParams.get("id");
-
+    //to be used later when getting specific details for an event
     if (eventId) {
       // Fetch a single event
       const eventRef = doc(db, "events", eventId);
@@ -18,10 +21,32 @@ export const GET = async (req: NextRequest) => {
 
       return NextResponse.json({ success: true, event: eventSnap.data() }, { status: 200 });
     } else {
-      // Fetch all events
+      // Fetch filtered events
       const eventsRef = collection(db, "events");
-      const eventsSnap = await getDocs(eventsRef);
+      let constraints = [];
 
+      if (searchParams.get("eventName")) {
+        constraints.push(where("eventName", "==", searchParams.get("eventName")));
+      }
+
+
+      const minAge = parseInt(searchParams.get("minAge") as string, 10);
+      if (minAge) {
+        constraints.push(where("minAge", ">=", minAge))
+      }
+      const maxAge = parseInt(searchParams.get("maxAge") as string, 10);
+      if (maxAge) {
+        constraints.push(where("maxAge", "<=", maxAge));
+      }
+      //would be good if this did "like" - needs to be filtered at a later date for this.
+      const organiser = searchParams.get("organiser")
+      if (organiser !== '') {
+        constraints.push(where("organiser", "==", organiser));
+      }
+
+      console.log(constraints)
+      const q = query(eventsRef, ...constraints);
+      const eventsSnap = await getDocs(q);
       const events = eventsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       return NextResponse.json({ success: true, events }, { status: 200 });

@@ -2,8 +2,9 @@ import { Card, CardContent, Typography, CardActions, Button } from '@mui/materia
 import React from 'react'
 
 type EventType = {
-  age : number[],
-  cost: string,
+  minAge : number,
+  maxAge: number,
+  cost: number,
   datetime : string,
   description : string,
   duration : string,
