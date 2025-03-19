@@ -19,10 +19,9 @@ import { FormHelperText } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import React, { useState } from "react";
 import RepeatEventSelect from "./repeatEventSelect";
-import { useRouter } from "next/navigation";
 
 const NewEventForm = () => {
-  const router = useRouter();
+
   const [isRepeatEvent, setIsRepeatEvent] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
   const [ageRange, setAgeRange] = useState<number[]>([0, 25]);

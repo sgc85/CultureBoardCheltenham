@@ -8,7 +8,7 @@ EVENT VIEWER
 5. passing getevent as a prop to the filter comp
 
 ADD EVENT
-1. changing add event to split min and max age to separate fields
+1. changing add event to split min and max age to separate fields x
 2. making sure these are numbers when stored
 3. not redirecting on success
 4. added snack bar to monitor success / failure

@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
 
     const minAge = parseInt(formObject.minAge as string, 10);
     const maxAge = parseInt(formObject.maxAge as string, 10);
-    const cost = parseInt(formObject.cost as string, 10);
+    const cost = parseInt(formObject.cost as string, 10); // won't work with non integer costs
 
 
     // const ageValue = formObject.age;

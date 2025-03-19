@@ -11,10 +11,12 @@ export default function Home() {
   
   if (loading) return <CircularProgress /> 
 
-  if (events) return <EventGrid events = {events}/>
-  
+  if (events) {
+    if (events.length > 0) return <EventGrid events = {events}/>
+  }
 
   return (
+
     <Box>
       <Typography variant="h3" textAlign='center'>
         Welcome to the CBC Event Hub

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 type eventDetails= {
     id: string,
     minAge: number,
@@ -13,8 +12,6 @@ type eventDetails= {
     location: string,
     organiser: string
 }
-
-
 
 export const useGetEvents = () => {
     const [loading, setLoading] = useState<boolean>(false);
