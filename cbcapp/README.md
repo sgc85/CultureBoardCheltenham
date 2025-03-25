@@ -1,5 +1,17 @@
 ##change log
+##NEW CHANGES
+#FIREBASE
+#Set up auth stuff
+#add set user
 
+#Create login form
+#Create useAuth hook
+#Update newEventform to not access unless signed in
+#update nav bar
+
+
+
+###OLD CHANGES
 EVENT VIEWER
 1. Moved the event grid into the home page
 2. added filters to the home page
