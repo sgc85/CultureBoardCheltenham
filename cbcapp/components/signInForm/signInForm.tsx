@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -7,25 +7,9 @@ import {
   TextField,
   Button,
   Snackbar,
-  Alert,
 } from "@mui/material";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-
-
-const getFriendlyErrorMessage = (errorCode: string): string => {
-  const errorMessages: { [key: string]: string } = {
-    "auth/user-not-found": "No account found with this email.",
-    "auth/wrong-password": "Incorrect password. Please try again.",
-    "auth/invalid-email": "Invalid email format.",
-    "auth/too-many-requests": "Too many failed attempts. Try again later.",
-    "auth/network-request-failed": "Network error. Check your connection.",
-    "auth/internal-error": "An internal error occurred. Please try again.",
-    "auth/missing-password": "Please enter your password.",
-  };
-
-  return errorMessages[errorCode] || "An unknown error occurred.";
-};
 
 const SignInForm = () => {
   const { signIn, loading, error, user } = useAuth();
@@ -90,15 +74,12 @@ const SignInForm = () => {
         </form>
       </Paper>
 
-      {/* Snackbar for authentication errors */}
       <Snackbar
         open={snackBarOpen}
         autoHideDuration={5000}
         onClose={() => setSnackBarOpen(false)}
-        message = {error}
+        message={error}
       />
-
-      
     </Box>
   );
 };

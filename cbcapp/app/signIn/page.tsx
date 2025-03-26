@@ -1,10 +1,9 @@
-import SignInForm from '@/components/signInForm/signInForm'
-import React from 'react'
+"use client";
+import SignInForm from "@/components/signInForm/signInForm";
+import React from "react";
 
 const signIn = () => {
-  return (
-    <SignInForm />
-  )
-}
+  return <SignInForm />;
+};
 
-export default signIn
+export default signIn;
