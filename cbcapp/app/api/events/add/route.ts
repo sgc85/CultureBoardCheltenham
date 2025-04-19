@@ -9,18 +9,12 @@ export const POST = async (req: NextRequest) => {
 
     const minAge = parseInt(formObject.minAge as string, 10);
     const maxAge = parseInt(formObject.maxAge as string, 10);
-    const cost = parseInt(formObject.cost as string, 10); // won't work with non integer costs
+    // --> Updated this to parse floats
+    const cost = parseFloat(formObject.cost as string)
+    const datetime = new Date(formObject.datetime as string)
 
-
-    // const ageValue = formObject.age;
-    // let ageArray: number[] = [];
-    // if (typeof ageValue === "string") {
-    //   ageArray = ageValue.split(",").map(Number);
-    // } else {
-    //   console.error("Unexpected type for age:", ageValue);
-    // }
-
-    const dataToSave = { ...formObject, minAge, maxAge, cost };
+ 
+    const dataToSave = { ...formObject, minAge, maxAge, cost, datetime };
     // // console.log("Received form data:", dataToSave);
 
     //CHANGED

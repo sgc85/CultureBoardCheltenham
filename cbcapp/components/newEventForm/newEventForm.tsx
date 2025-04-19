@@ -106,7 +106,16 @@ const NewEventForm = () => {
 
             <FormControl fullWidth sx={{ m: 1 }}>
               <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-              <OutlinedInput type="number" name="cost" id="outlined-adornment-amount" startAdornment={<InputAdornment position="start">£</InputAdornment>} label="Amount" />
+              <OutlinedInput 
+              type="number" 
+              //-> ADDED step to avoid rounding to integers
+              inputProps = {{
+                step:0.01
+              }}
+              name="cost" 
+              id="outlined-adornment-amount" 
+              startAdornment={<InputAdornment position="start">£</InputAdornment>} 
+              label="Amount" />
             </FormControl>
 
             <FormControlLabel control={<Switch onChange={handleRepeatEventChange} />} label="Repeat Event" sx={{ mb: 3 }} />

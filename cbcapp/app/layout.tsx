@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+"use client";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import TopNarBar from "@/components/topnavbar";
-
-
-
-export const metadata: Metadata = {
-  title: "CBC Event Viewer",
-  description: "Whatever you want...",
-};
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./theme";
 
 export default function RootLayout({
   children,
@@ -18,11 +13,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <TopNarBar />
-        {children}
-      </body>
-    </html>
+    <ThemeProvider theme={theme}>
+      <title>CBC APP</title>
+      <html lang="en">
+        <body>
+          <TopNarBar />
+          {children}
+        </body>
+      </html>
+    </ThemeProvider>
   );
 }

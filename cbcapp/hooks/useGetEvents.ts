@@ -1,25 +1,15 @@
 import { useState } from "react";
 
-type eventDetails= {
-    id: string,
-    minAge: number,
-    maxAge: number,
-    cost: number,
-    datetime: string,
-    description: string,
-    duration: string,
-    eventName: string,
-    location: string,
-    organiser: string
-}
+
+import { eventType } from '@/types'
+
 
 export const useGetEvents = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
-    const [events, setEvents] = useState<eventDetails[]>();
+    const [events, setEvents] = useState<eventType[]>();
 
     const fetchEvents = async (params = {}) => {
-        console.log("fetching events...")
         setLoading(true);
         setError("");
 
@@ -35,6 +25,7 @@ export const useGetEvents = () => {
             }
 
             setEvents(data.events);
+            
         } catch (error) {
             console.error("Error fetching events:", error);
             setError(error instanceof Error ? error.message : "Unknown error");

@@ -1,3 +1,12 @@
+##updated changes!
+#1 Colours
+#2 Date filter
+#3 No old events
+#4 Details viewer
+#5 accept float on price
+
+
+
 ##change log
 ##NEW CHANGES
 #FIREBASE

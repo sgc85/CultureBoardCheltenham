@@ -23,10 +23,7 @@ const Filter = ({ fetchEvents }: Props) => {
                         <TextField type="text" name="eventName" label="Event Name" />
                     </FormControl>
                     <FormControl>
-                        <TextField type="number" name="minAge" label="Minimum Age" />
-                    </FormControl>
-                    <FormControl>
-                        <TextField type="number" name="maxAge" label="Maximum Age" />
+                        <TextField type="number" name="age" label="Age" />
                     </FormControl>
                     <FormControl>
                         <TextField type="text" name="organiser" label="Organiser" />

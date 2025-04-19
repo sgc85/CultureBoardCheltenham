@@ -5,6 +5,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import React from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { pink } from '@mui/material/colors';
+
 
 const TopNavBar = () => {
   const { user, loading, signOutUser } = useAuth();

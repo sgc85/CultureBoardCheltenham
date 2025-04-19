@@ -1,23 +1,14 @@
+import { eventType } from '@/types'
 import { Card, CardContent, Typography, CardActions, Button } from '@mui/material'
 import React from 'react'
 
-type EventType = {
-  minAge : number,
-  maxAge: number,
-  cost: number,
-  datetime : string,
-  description : string,
-  duration : string,
-  eventName : string,
-  location : string,
-  organiser : string
-}
 
 interface Props {
-  event: EventType
+  event: eventType
+  setFocus: React.Dispatch<React.SetStateAction<eventType | null>>
 }
 
-const EventCard = ( { event } : Props )  => {
+const EventCard = ( { event, setFocus } : Props )  => {
   // console.log(event)
   return (
     <Card>
@@ -27,7 +18,7 @@ const EventCard = ( { event } : Props )  => {
         <Typography variant='body1'>{event.description}</Typography>
 
         <CardActions>
-            <Button variant = "outlined">More Info</Button>
+            <Button variant = "outlined" onClick={ () => setFocus(event) }>More Info</Button>
         </CardActions>
     </CardContent>
 </Card>

@@ -4,6 +4,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import Filter from "@/components/filter"
 import { useGetEvents } from "@/hooks/useGetEvents";
 import EventGrid from "@/components/eventgrid";
+import { pink } from '@mui/material/colors';
 
 export default function Home() {
 
@@ -18,11 +19,11 @@ export default function Home() {
   return (
 
     <Box>
-      <Typography variant="h3" textAlign='center'>
+      <Typography variant="h3" textAlign='center' color = "text.primary">
         Welcome to the CBC Event Hub
       </Typography>
 
-      <Typography variant="body2" textAlign='center'>
+      <Typography variant="body2" textAlign='center' color="text.primary">
         This is lots of exciting information about the charity...
       </Typography>
 

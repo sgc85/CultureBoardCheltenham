@@ -27,22 +27,24 @@ export const GET = async (req: NextRequest) => {
 
       if (searchParams.get("eventName")) {
         constraints.push(where("eventName", "==", searchParams.get("eventName")));
+
       }
 
 
-      const minAge = parseInt(searchParams.get("minAge") as string, 10);
-      if (minAge) {
-        constraints.push(where("minAge", ">=", minAge))
+      const age = parseInt(searchParams.get("age") as string, 10);
+      if (age) {
+        //databases needed indexing on min age at this point - follow link in error and accept defaults for this when it happens. - if it happens.
+        constraints.push(where("maxAge", ">=", age))
+        constraints.push(where("minAge", "<=", age))
       }
-      const maxAge = parseInt(searchParams.get("maxAge") as string, 10);
-      if (maxAge) {
-        constraints.push(where("maxAge", "<=", maxAge));
-      }
+
       //would be good if this did "like" - needs to be filtered at a later date for this.
       const organiser = searchParams.get("organiser")
       if (organiser !== '') {
         constraints.push(where("organiser", "==", organiser));
       }
+
+      constraints.push(where("datetime",">=", new Date()))
 
       console.log(constraints)
       const q = query(eventsRef, ...constraints);
